@@ -35,11 +35,14 @@ for input_sublist, output_path_str in zip(INPUT_LIST, OUTPUT_LIST):
     input_path_included = set()
     for input_path_glob_str in input_sublist:
         input_path_list = natsort.natsorted([str(p) for p in REPO_PATH.glob(input_path_glob_str)])
+        print("input_path_list", input_path_list)
         for input_path_str in input_path_list:
+            print("input_path_str", input_path_str)
             if not EXCLUDE_DUPLICATES or input_path_str not in input_path_included:
                 input_path_included.add(input_path_str)
                 with open(input_path_str, 'r') as input_file:
                     md_str += input_file.read() + "\n"
+    print("data", md_str)
     print("Generating", output_path_str)
     output_path = REPO_PATH.joinpath(output_path_str)
     html = "<!DOCTYPE html>\n" + md.convert(md_str) + "\n" + style
